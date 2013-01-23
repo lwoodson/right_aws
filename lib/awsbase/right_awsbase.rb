@@ -424,7 +424,10 @@ module RightAws
       end
       connection = (connection_storage[server_url] ||= {})
       connection[:last_used_at] = Time.now
-      connection[:connection] ||= Rightscale::HttpConnection.new(:exception => RightAws::AwsError, :logger => @logger)
+      connection[:connection] ||= Rightscale::HttpConnection.new(:exception => RightAws::AwsError, 
+                                                                 :logger => @logger,
+                                                                 :http_connection_open_timeout => 15,
+                                                                 :http_connection_retry_count => 5)
     end
 
     #----------------------------
